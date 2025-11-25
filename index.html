@@ -1,38 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Sign-In Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 450px;
+            margin: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: #0077cc;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #005fa3;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Contractor Sign-In Form</h2>
+
 <form action="https://api.web3forms.com/submit" method="POST">
 
-    <!-- REQUIRED: Your Web3Forms Access Key -->
+    <!-- REQUIRED Web3Forms Access Key -->
     <input type="hidden" name="access_key" value="b3f24ca4-36e4-4565-bf86-2359a2109e43">
 
-    <h2>Contractor Sign-In Form</h2>
+    <!-- Email address where notifications will be sent -->
+    <input type="hidden" name="email" value="lee@block-buddy.co.uk">
 
-    <label for="name">Full Name</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="company">Company Name</label>
+    <label for="company">Name of Company Signing In</label>
     <input type="text" id="company" name="company" required>
 
-    <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" name="phone" required>
+    <label for="individual">Name of Individual Signing In</label>
+    <input type="text" id="individual" name="individual" required>
 
-    <label for="email">Email Address</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="job">Job / Work Being Carried Out</label>
-    <input type="text" id="job" name="job" required>
-
-    <label for="timein">Time In</label>
-    <input type="time" id="timein" name="timein" required>
+    <label for="site">Name of Site / Development</label>
+    <input type="text" id="site" name="site" required>
 
     <label for="date">Date</label>
     <input type="date" id="date" name="date" required>
 
-    <!-- Optional: redirect URL after submit -->
-    <input type="hidden" name="redirect" value="https://block-buddy.github.io/success.html">
-
     <button type="submit">Submit</button>
 </form>
 
-<!-- SUCCESS MESSAGE (optional auto-popup) -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
@@ -41,3 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 </script>
+
+</body>
+</html>
