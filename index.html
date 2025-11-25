@@ -5,7 +5,7 @@
   <style>
       body { font-family: Arial; margin: 40px; }
       label { display: block; margin-top: 15px; }
-      input, button { padding: 10px; width: 100%; max-width: 300px; }
+      input, button { padding: 10px; width: 100%; max-width: 350px; }
       button { margin-top: 20px; cursor: pointer; }
   </style>
 </head>
@@ -14,8 +14,15 @@
 <h2>Contractor Signing In</h2>
 
 <form id="signInForm" action="https://formspree.io/f/xjkdpyno" method="POST">
-    <label>Company Name:</label>
-    <input type="text" name="company" required>
+
+    <label>Name of Company signing in:</label>
+    <input type="text" name="company_name" required>
+
+    <label>Name of individual signing in:</label>
+    <input type="text" name="individual_name" required>
+
+    <label>Name of Site / Development:</label>
+    <input type="text" name="site_name" required>
 
     <label>Date:</label>
     <input type="date" name="date" required>
