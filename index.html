@@ -1,58 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Contractor Signing In</title>
-  <style>
-      body { font-family: Arial; margin: 40px; }
-      label { display: block; margin-top: 15px; }
-      input, button { padding: 10px; width: 100%; max-width: 350px; }
-      button { margin-top: 20px; cursor: pointer; }
-  </style>
-</head>
-<body>
+<form action="https://api.web3forms.com/submit" method="POST">
 
-<h2>Contractor Signing In</h2>
+    <!-- REQUIRED: Your Web3Forms Access Key -->
+    <input type="hidden" name="access_key" value="b3f24ca4-36e4-4565-bf86-2359a2109e43">
 
-<form id="signInForm" action="https://formspree.io/f/xjkdpyno" method="POST">
+    <h2>Contractor Sign-In Form</h2>
 
-    <label>Name of Company signing in:</label>
-    <input type="text" name="company_name" required>
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" required>
 
-    <label>Name of individual signing in:</label>
-    <input type="text" name="individual_name" required>
+    <label for="company">Company Name</label>
+    <input type="text" id="company" name="company" required>
 
-    <label>Name of Site / Development:</label>
-    <input type="text" name="site_name" required>
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" required>
 
-    <label>Date:</label>
-    <input type="date" name="date" required>
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" required>
 
-    <button type="submit">Send</button>
+    <label for="job">Job / Work Being Carried Out</label>
+    <input type="text" id="job" name="job" required>
+
+    <label for="timein">Time In</label>
+    <input type="time" id="timein" name="timein" required>
+
+    <label for="date">Date</label>
+    <input type="date" id="date" name="date" required>
+
+    <!-- Optional: redirect URL after submit -->
+    <input type="hidden" name="redirect" value="https://block-buddy.github.io/success.html">
+
+    <button type="submit">Submit</button>
 </form>
 
-<p id="status"></p>
-
+<!-- SUCCESS MESSAGE (optional auto-popup) -->
 <script>
-document.getElementById('signInForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    let form = event.target;
-
-    fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-    })
-    .then(response => {
-        if (response.ok) {
-            document.getElementById('status').innerText = "Sign-in recorded. Thank you!";
-            form.reset();
-        } else {
-            document.getElementById('status').innerText = "There was a problem submitting the form.";
-        }
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    form.addEventListener("submit", () => {
+        alert("Form submitted successfully. Thank you!");
     });
 });
 </script>
-
-</body>
-</html>
