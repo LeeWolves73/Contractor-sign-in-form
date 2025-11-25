@@ -1,123 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contractor Sign In - Block Buddy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Block Buddy Visitor Sign-In</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #ff00ff 0%, #ffff00 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+    .card {
+      background: #ffffff;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      padding: 24px 24px 28px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .container {
-            width: 95%;
-            max-width: 480px;
-            background: #fafafa;
-            padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            text-align: center;
-        }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ff00ff33, #ffff0033);
+      opacity: 0.7;
+      pointer-events: none;
+    }
 
-        .logo {
-            width: 180px;
-            margin-bottom: 20px;
-        }
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
 
-        h1 {
-            color: #ff8a00;
-            margin-bottom: 10px;
-        }
+    .logo {
+      display: block;
+      margin: 0 auto 12px auto;
+      max-width: 200px;
+    }
 
-        label {
-            display: block;
-            text-align: left;
-            margin: 12px 0 6px;
-            font-weight: bold;
-        }
+    h1 {
+      text-align: center;
+      margin: 0 0 4px;
+      font-size: 1.6rem;
+      color: #4b004b;
+    }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            margin-bottom: 12px;
-        }
+    .subtitle {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 16px;
+    }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            background: #ff8a00;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #333;
+    }
 
-        button:hover {
-            background: #e67600;
-        }
-    </style>
+    input, textarea {
+      width: 100%;
+      padding: 9px 10px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #ff00ff;
+      box-shadow: 0 0 0 2px #ff00ff33;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    button {
+      margin-top: 18px;
+      width: 100%;
+      padding: 11px;
+      border-radius: 999px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(90deg, #ff00ff, #ffff00);
+      color: #000;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+
+    button:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .small {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Success overlay */
+    .success-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .success-box {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 26px 24px 22px;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+      animation: popIn 0.4s ease-out;
+    }
+
+    .success-tick {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 4px solid #00b894;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .success-tick::before {
+      content: "✓";
+      font-size: 2.4rem;
+      color: #00b894;
+    }
+
+    .success-title {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: #222;
+    }
+
+    .success-text {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .success-sub {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-    <div class="container">
-
-        <!-- Block Buddy Logo -->
-        <img src="Block Buddy Logo 1.jpg" class="logo" alt="Block Buddy Logo">
-
-        <h1>Contractor Sign In</h1>
-
-        <form id="signinForm">
-
-            <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullname" required>
-
-            <label for="company">Company</label>
-            <input type="text" id="company" name="company" required>
-
-            <label for="purpose">Reason for Visit</label>
-            <input type="text" id="purpose" name="purpose" required>
-
-            <label for="timein">Time In</label>
-            <input type="time" id="timein" name="timein" required>
-
-            <label for="timeout">Time Out (optional)</label>
-            <input type="time" id="timeout" name="timeout">
-
-            <button type="submit">Submit</button>
-        </form>
-
+  <!-- Success overlay (acts like a success page popup) -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-box">
+      <div class="success-tick"></div>
+      <div class="success-title">Signed in successfully</div>
+      <div class="success-text">
+        Thank you for signing in. A notification has been sent to the Block Buddy team.
+      </div>
+      <div class="success-sub">
+        You can now hand the device back or close this screen.
+      </div>
     </div>
+  </div>
 
-    <script>
-        document.getElementById("signinForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+  <div class="card">
+    <div class="card-inner">
+      <!-- Put your logo file in the repo root as: block-buddy-logo.jpg -->
+      <img src="block-buddy-logo.jpg" alt="Block Buddy Logo" class="logo" />
 
-            const name = document.getElementById("fullname").value;
-            const company = document.getElementById("company").value;
-            const purpose = document.getElementById("purpose").value;
-            const timeIn = document.getElementById("timein").value;
-            const timeOut = document.getElementById("timeout").value;
+      <h1>Visitor Sign-In</h1>
+      <div class="subtitle">Please complete all fields below</div>
 
-            // (Optional: Add webhook or Google Sheets integration here later)
+      <form id="visitorForm">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required />
 
-            // Redirect to success page
-            window.location.href = "success.html";
+        <label for="company">Company</label>
+        <input id="company" name="company" type="text" required />
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required />
+
+        <label for="purpose">Purpose of Visit</label>
+        <textarea id="purpose" name="purpose" required></textarea>
+
+        <div class="row">
+          <div>
+            <label for="timeIn">Time In</label>
+            <input id="timeIn" name="timeIn" type="time" required />
+          </div>
+          <div>
+            <label for="timeOut">Time Out</label>
+            <input id="timeOut" name="timeOut" type="time" required />
+          </div>
+        </div>
+
+        <label for="date">Date</label>
+        <input id="date" name="date" type="date" required />
+
+        <button type="submit" id="submitBtn">Sign In</button>
+        <div class="small">
+          Your details will only be used for site security and visitor records.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("visitorForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const successOverlay = document.getElementById("successOverlay");
+
+    // 🔗 Replace this with your actual Netlify function URL
+    // Example: "https://your-site.netlify.app/.netlify/functions/send-email"
+    const EMAIL_ENDPOINT = "https://YOUR-NETLIFY-SITE.netlify.app/.netlify/functions/send-email";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "Sending...";
+
+      try {
+        const res = await fetch(EMAIL_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
         });
-    </script>
 
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        // Show success overlay “page”
+        successOverlay.style.display = "flex";
+        form.reset();
+      } catch (err) {
+        alert("There was an error sending your sign-in. Please try again or contact reception.");
+        console.error(err);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+  </script>
 </body>
 </html>
