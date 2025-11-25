@@ -4,54 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contractor Sign-In</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            padding: 20px;
+            background: #fff7ef;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
         }
-        form {
+
+        .container {
+            margin-top: 40px;
             background: white;
-            padding: 20px;
-            max-width: 500px;
-            margin: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 25px 35px;
+            border-radius: 12px;
+            width: 95%;
+            max-width: 480px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 10px solid #FF7A00;
         }
+
+        h2 {
+            text-align: center;
+            color: #FF7A00;
+            margin-bottom: 25px;
+        }
+
         label {
-            margin-top: 15px;
             display: block;
+            margin-top: 15px;
             font-weight: bold;
+            color: #444;
         }
+
         input, button {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
+            padding: 12px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             font-size: 16px;
         }
+
+        input:focus {
+            outline: none;
+            border-color: #FF7A00;
+            box-shadow: 0 0 4px rgba(255,122,0,0.4);
+        }
+
         button {
-            background: #333;
+            margin-top: 22px;
+            background: #FF7A00;
             color: white;
             border: none;
-            margin-top: 20px;
             cursor: pointer;
+            font-size: 18px;
+            transition: 0.2s;
         }
+
         button:hover {
-            background: #555;
+            background: #e56e00;
         }
     </style>
 </head>
 <body>
 
-<form action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8">
+<div class="container">
+<form action="https://api.web3forms.com/submit" method="POST">
 
-    <!-- Web3Forms Access Key -->
     <input type="hidden" name="access_key" value="b3f24ca4-36e4-4565-bf86-2359a2109e43">
 
-    <!-- SEND EMAIL TO info@block-buddy.co.uk -->
-    <input type="hidden" name="email" value="info@block-buddy.co.uk">
-
-    <h2>Contractor Sign-In Form</h2>
+    <h2>Contractor Sign-In</h2>
 
     <label for="company">Name of Company Signing In</label>
     <input type="text" id="company" name="company" required>
@@ -65,15 +92,11 @@
     <label for="date">Date</label>
     <input type="date" id="date" name="date" required>
 
+    <input type="hidden" name="redirect" value="https://leewolves73.github.io/Contractor-sign-in-form/success.html">
+
     <button type="submit">Submit</button>
 </form>
-
-<!-- SIMPLE SUCCESS POPUP -->
-<script>
-document.querySelector("form").addEventListener("submit", function() {
-    alert("Form submitted successfully. Thank you!");
-});
-</script>
+</div>
 
 </body>
 </html>
