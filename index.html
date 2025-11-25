@@ -44,7 +44,7 @@
             font-weight: bold;
         }
 
-        input, select {
+        input {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
@@ -91,30 +91,28 @@
             <label for="purpose">Reason for Visit</label>
             <input type="text" id="purpose" name="purpose" required>
 
-            <label for="inout">Time In / Time Out</label>
-            <select id="inout" name="inout" required>
-                <option value="">Select</option>
-                <option value="Time In">Time In</option>
-                <option value="Time Out">Time Out</option>
-            </select>
+            <label for="timein">Time In</label>
+            <input type="time" id="timein" name="timein" required>
+
+            <label for="timeout">Time Out (optional)</label>
+            <input type="time" id="timeout" name="timeout">
 
             <button type="submit">Submit</button>
         </form>
+
     </div>
 
     <script>
         document.getElementById("signinForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            // collect form data
             const name = document.getElementById("fullname").value;
             const company = document.getElementById("company").value;
             const purpose = document.getElementById("purpose").value;
-            const inout = document.getElementById("inout").value;
-            const timestamp = new Date().toLocaleString();
+            const timeIn = document.getElementById("timein").value;
+            const timeOut = document.getElementById("timeout").value;
 
-            // Save to Google Sheets via webhook if you add one
-            // (Can be added later if needed)
+            // (Optional: Add webhook or Google Sheets integration here later)
 
             // Redirect to success page
             window.location.href = "success.html";
