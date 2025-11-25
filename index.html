@@ -1,101 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contractor Sign-In</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contractor Sign-In | Block Buddy</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #fff7ef;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fff6e9;
+        margin: 0;
+        padding: 0;
+        color: #444;
+    }
 
-        .container {
-            margin-top: 40px;
-            background: white;
-            padding: 25px 35px;
-            border-radius: 12px;
-            width: 95%;
-            max-width: 480px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 10px solid #FF7A00;
-        }
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.08);
+        border-top: 12px solid #f59e0b;
+    }
 
-        h2 {
-            text-align: center;
-            color: #FF7A00;
-            margin-bottom: 25px;
-        }
+    .logo {
+        display: block;
+        width: 260px;
+        margin: 0 auto 20px auto;
+    }
 
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #444;
-        }
+    h2 {
+        text-align: center;
+        color: #f59e0b;
+        font-size: 26px;
+        letter-spacing: 1px;
+        margin-bottom: 25px;
+    }
 
-        input, button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 6px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
+    label {
+        font-weight: bold;
+        margin-top: 15px;
+        display: block;
+        color: #333;
+    }
 
-        input:focus {
-            outline: none;
-            border-color: #FF7A00;
-            box-shadow: 0 0 4px rgba(255,122,0,0.4);
-        }
+    input, button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
 
-        button {
-            margin-top: 22px;
-            background: #FF7A00;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            transition: 0.2s;
-        }
+    button {
+        background: #f59e0b;
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 25px;
+        transition: 0.2s;
+    }
 
-        button:hover {
-            background: #e56e00;
-        }
-    </style>
+    button:hover {
+        background: #dd8c00;
+    }
+
+</style>
 </head>
+
 <body>
 
 <div class="container">
-<form action="https://api.web3forms.com/submit" method="POST">
 
-    <input type="hidden" name="access_key" value="b3f24ca4-36e4-4565-bf86-2359a2109e43">
+    <img src="Block Buddy Logo 1.jpg" class="logo" alt="Block Buddy Logo">
 
-    <h2>Contractor Sign-In</h2>
+    <h2>Contractor Sign-In Form</h2>
 
-    <label for="company">Name of Company Signing In</label>
-    <input type="text" id="company" name="company" required>
+    <form action="https://api.web3forms.com/submit" method="POST">
 
-    <label for="individual">Name of Individual Signing In</label>
-    <input type="text" id="individual" name="individual" required>
+        <!-- REQUIRED: Web3Forms Access Key -->
+        <input type="hidden" name="access_key" value="b3f24ca4-36e4-4565-bf86-2359a2109e43">
 
-    <label for="site">Name of Site / Development</label>
-    <input type="text" id="site" name="site" required>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
 
-    <label for="date">Date</label>
-    <input type="date" id="date" name="date" required>
+        <label for="company">Company Name</label>
+        <input type="text" id="company" name="company" required>
 
-    <input type="hidden" name="redirect" value="https://leewolves73.github.io/Contractor-sign-in-form/success.html">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" required>
 
-    <button type="submit">Submit</button>
-</form>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="job">Job / Work Being Carried Out</label>
+        <input type="text" id="job" name="job" required>
+
+        <label for="timein">Time In</label>
+        <input type="time" id="timein" name="timein" required>
+
+        <label for="timeout">Time Out</label>
+        <input type="time" id="timeout" name="timeout">
+
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <!-- Redirect URL -->
+        <input type="hidden" name="redirect" value="https://block-buddy.github.io/success.html">
+
+        <button type="submit">Submit</button>
+
+    </form>
 </div>
 
 </body>
