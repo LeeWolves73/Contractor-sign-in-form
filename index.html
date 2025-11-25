@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contractor Signing In</title>
+  <style>
+      body { font-family: Arial; margin: 40px; }
+      label { display: block; margin-top: 15px; }
+      input, button { padding: 10px; width: 100%; max-width: 300px; }
+      button { margin-top: 20px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<h2>Contractor Signing In</h2>
+
+<form id="signInForm" action="YOUR_FORMSPREE_URL_HERE" method="POST">
+    <label>Company Name:</label>
+    <input type="text" name="company" required>
+
+    <label>Date:</label>
+    <input type="date" name="date" required>
+
+    <button type="submit">Send</button>
+</form>
+
+<p id="status"></p>
+
+<script>
+document.getElementById('signInForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let form = event.target;
+
+    fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+        if (response.ok) {
+            document.getElementById('status').innerText = "Sign-in recorded. Thank you!";
+            form.reset();
+        } else {
+            document.getElementById('status').innerText = "There was a problem submitting the form.";
+        }
+    });
+});
+</script>
+
+</body>
+</html>
