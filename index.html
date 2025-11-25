@@ -1,120 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contractor Sign-In | Block Buddy</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Sign In - Block Buddy</title>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #fff6e9;
-        margin: 0;
-        padding: 0;
-        color: #444;
-    }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    .container {
-        max-width: 600px;
-        margin: 40px auto;
-        background: white;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.08);
-        border-top: 12px solid #f59e0b;
-    }
+        .container {
+            width: 95%;
+            max-width: 480px;
+            background: #fafafa;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
 
-    .logo {
-        display: block;
-        width: 260px;
-        margin: 0 auto 20px auto;
-    }
+        .logo {
+            width: 180px;
+            margin-bottom: 20px;
+        }
 
-    h2 {
-        text-align: center;
-        color: #f59e0b;
-        font-size: 26px;
-        letter-spacing: 1px;
-        margin-bottom: 25px;
-    }
+        h1 {
+            color: #ff8a00;
+            margin-bottom: 10px;
+        }
 
-    label {
-        font-weight: bold;
-        margin-top: 15px;
-        display: block;
-        color: #333;
-    }
+        label {
+            display: block;
+            text-align: left;
+            margin: 12px 0 6px;
+            font-weight: bold;
+        }
 
-    input, button {
-        width: 100%;
-        padding: 12px;
-        margin-top: 6px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-    }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
 
-    button {
-        background: #f59e0b;
-        border: none;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 25px;
-        transition: 0.2s;
-    }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #ff8a00;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
 
-    button:hover {
-        background: #dd8c00;
-    }
-
-</style>
+        button:hover {
+            background: #e67600;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <img src="Block Buddy Logo 1.jpg" class="logo" alt="Block Buddy Logo">
+        <!-- Block Buddy Logo -->
+        <img src="Block Buddy Logo 1.jpg" class="logo" alt="Block Buddy Logo">
 
-    <h2>Contractor Sign-In Form</h2>
+        <h1>Contractor Sign In</h1>
 
-    <form action="https://api.web3forms.com/submit" method="POST">
+        <form id="signinForm">
 
-        <!-- REQUIRED: Web3Forms Access Key -->
-        <input type="hidden" name="access_key" value="b3f24ca4-36e4-4565-bf86-2359a2109e43">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" required>
 
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required>
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" required>
 
-        <label for="company">Company Name</label>
-        <input type="text" id="company" name="company" required>
+            <label for="purpose">Reason for Visit</label>
+            <input type="text" id="purpose" name="purpose" required>
 
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" required>
+            <label for="inout">Time In / Time Out</label>
+            <select id="inout" name="inout" required>
+                <option value="">Select</option>
+                <option value="Time In">Time In</option>
+                <option value="Time Out">Time Out</option>
+            </select>
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
-        <label for="job">Job / Work Being Carried Out</label>
-        <input type="text" id="job" name="job" required>
+    <script>
+        document.getElementById("signinForm").addEventListener("submit", function(event) {
+            event.preventDefault();
 
-        <label for="timein">Time In</label>
-        <input type="time" id="timein" name="timein" required>
+            // collect form data
+            const name = document.getElementById("fullname").value;
+            const company = document.getElementById("company").value;
+            const purpose = document.getElementById("purpose").value;
+            const inout = document.getElementById("inout").value;
+            const timestamp = new Date().toLocaleString();
 
-        <label for="timeout">Time Out</label>
-        <input type="time" id="timeout" name="timeout">
+            // Save to Google Sheets via webhook if you add one
+            // (Can be added later if needed)
 
-        <label for="date">Date</label>
-        <input type="date" id="date" name="date" required>
-
-        <!-- Redirect URL -->
-        <input type="hidden" name="redirect" value="https://block-buddy.github.io/success.html">
-
-        <button type="submit">Submit</button>
-
-    </form>
-</div>
+            // Redirect to success page
+            window.location.href = "success.html";
+        });
+    </script>
 
 </body>
 </html>
