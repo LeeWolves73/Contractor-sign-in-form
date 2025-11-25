@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Block Buddy Visitor Sign-In</title>
+
   <style>
     body {
       margin: 0;
@@ -139,7 +140,6 @@
       text-align: center;
     }
 
-    /* Success overlay */
     .success-overlay {
       position: fixed;
       inset: 0;
@@ -170,7 +170,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
 
     .success-tick::before {
@@ -179,89 +178,65 @@
       color: #00b894;
     }
 
-    .success-title {
-      font-size: 1.4rem;
-      margin-bottom: 6px;
-      color: #222;
-    }
-
-    .success-text {
-      font-size: 0.95rem;
-      color: #555;
-      margin-bottom: 10px;
-    }
-
-    .success-sub {
-      font-size: 0.8rem;
-      color: #888;
-    }
-
     @keyframes popIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(20px) scale(0.9); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
   </style>
 </head>
+
 <body>
-  <!-- Success overlay (acts like a success page popup) -->
+
   <div class="success-overlay" id="successOverlay">
     <div class="success-box">
       <div class="success-tick"></div>
-      <div class="success-title">Signed in successfully</div>
-      <div class="success-text">
-        Thank you for signing in. A notification has been sent to the Block Buddy team.
-      </div>
-      <div class="success-sub">
-        You can now hand the device back or close this screen.
-      </div>
+      <h2>Signed In</h2>
+      <p>Your visitor form has been submitted successfully.</p>
+      <p style="font-size:0.8rem;color:#666">You may close this screen.</p>
     </div>
   </div>
 
   <div class="card">
     <div class="card-inner">
-      <!-- Put your logo file in the repo root as: block-buddy-logo.jpg -->
-      <img src="block-buddy-logo.jpg" alt="Block Buddy Logo" class="logo" />
+
+      <img src="block-buddy-logo.jpg" class="logo" alt="Block Buddy Logo" />
 
       <h1>Visitor Sign-In</h1>
-      <div class="subtitle">Please complete all fields below</div>
+      <div class="subtitle">Please complete all fields</div>
 
       <form id="visitorForm">
-        <label for="name">Name</label>
-        <input id="name" name="name" type="text" required />
 
-        <label for="company">Company</label>
-        <input id="company" name="company" type="text" required />
+        <label>Name</label>
+        <input name="name" type="text" required />
 
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" required />
+        <label>Company</label>
+        <input name="company" type="text" required />
 
-        <label for="purpose">Purpose of Visit</label>
-        <textarea id="purpose" name="purpose" required></textarea>
+        <label>Email</label>
+        <input name="email" type="email" required />
+
+        <label>Purpose of Visit</label>
+        <textarea name="purpose" required></textarea>
 
         <div class="row">
           <div>
-            <label for="timeIn">Time In</label>
-            <input id="timeIn" name="timeIn" type="time" required />
+            <label>Time In</label>
+            <input name="timeIn" type="time" required />
           </div>
+
           <div>
-            <label for="timeOut">Time Out</label>
-            <input id="timeOut" name="timeOut" type="time" required />
+            <label>Time Out</label>
+            <input name="timeOut" type="time" required />
           </div>
         </div>
 
-        <label for="date">Date</label>
-        <input id="date" name="date" type="date" required />
+        <label>Date</label>
+        <input name="date" type="date" required />
 
-        <button type="submit" id="submitBtn">Sign In</button>
-        <div class="small">
-          Your details will only be used for site security and visitor records.
-        </div>
+        <button id="submitBtn" type="submit">Submit</button>
+
+        <div class="small">Your information is used only for visitor logging.</div>
+
       </form>
     </div>
   </div>
@@ -271,9 +246,7 @@
     const submitBtn = document.getElementById("submitBtn");
     const successOverlay = document.getElementById("successOverlay");
 
-    // 🔗 Replace this with your actual Netlify function URL
-    // Example: "https://your-site.netlify.app/.netlify/functions/send-email"
-    const EMAIL_ENDPOINT = "https://YOUR-NETLIFY-SITE.netlify.app/.netlify/functions/send-email";
+    const EMAIL_ENDPOINT = "https://radiant-sunshine-4c0c26.netlify.app/.netlify/functions/send-email";
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -282,33 +255,30 @@
       const data = Object.fromEntries(formData.entries());
 
       submitBtn.disabled = true;
-      const originalText = submitBtn.textContent;
       submitBtn.textContent = "Sending...";
 
       try {
         const res = await fetch(EMAIL_ENDPOINT, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
+        if (!res.ok) throw new Error("Network error");
 
-        // Show success overlay “page”
         successOverlay.style.display = "flex";
         form.reset();
+
       } catch (err) {
-        alert("There was an error sending your sign-in. Please try again or contact reception.");
+        alert("There was an issue sending your form. Please try again.");
         console.error(err);
+
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+        submitBtn.textContent = "Submit";
       }
     });
   </script>
+
 </body>
 </html>
