@@ -1,7 +1,8 @@
 {
   "name": "contractor-sign-in-form",
   "version": "1.0.0",
+  "private": true,
   "dependencies": {
-    "resend": "latest"
+    "resend": "^2.1.0"
   }
 }
