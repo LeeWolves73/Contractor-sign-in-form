@@ -1,52 +1,39 @@
+import { Resend } from "resend";
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).send("Method Not Allowed");
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  const { name, company, email, siteAddress, purpose, timeIn, date } = req.body;
+
   try {
-    const {
-      name,
-      company,
-      email,
-      purpose,
-      timeIn,
-      timeOut,
-      date
-    } = req.body;
+    await resend.emails.send({
+      from: "Block Buddy <info@block-buddy.co.uk>",
+      to: "info@block-buddy.co.uk",
+      subject: "New Visitor Sign-In",
+      html: `
+        <h2>New Visitor Sign-In</h2>
 
-    const subject = `New visitor sign-in: ${name}`;
-    const text = `
-New visitor sign-in:
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Company:</strong> ${company}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Site Address:</strong> ${siteAddress}</p>
+        <p><strong>Purpose of Visit:</strong> ${purpose}</p>
+        <p><strong>Time In:</strong> ${timeIn}</p>
+        <p><strong>Date:</strong> ${date}</p>
 
-Name: ${name}
-Company: ${company}
-Email: ${email}
-Purpose: ${purpose}
-Time In: ${timeIn}
-Time Out: ${timeOut}
-Date: ${date}
-    `.trim();
-
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: process.env.RESEND_FROM,
-        to: "info@block-buddy.co.uk",
-        subject,
-        text,
-      }),
+        <br>
+        <p style="font-size:12px;color:#888;">This message was sent automatically from the visitor sign-in form.</p>
+      `
     });
 
-    if (!response.ok) {
-      return res.status(500).send("Failed to send email");
-    }
+    return res.status(200).json({ success: true });
 
-    return res.status(200).send("OK");
   } catch (error) {
-    return res.status(500).send("Server error");
+    console.error("Email error:", error);
+    return res.status(500).json({ error: "Email failed to send" });
   }
 }
