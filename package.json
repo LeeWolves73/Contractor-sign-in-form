@@ -1,5 +1,7 @@
 {
-  "name": "block-buddy-visitor-form",
+  "name": "contractor-sign-in-form",
   "version": "1.0.0",
-  "private": true
+  "dependencies": {
+    "resend": "latest"
+  }
 }
