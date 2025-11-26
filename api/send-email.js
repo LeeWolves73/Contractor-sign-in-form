@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { name, company, email, purpose, siteAddress, timeIn, date } = req.body;
+  const { name, company, email, siteAddress, purpose, timeIn, date } = req.body;
 
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
@@ -16,17 +16,13 @@ export default async function handler(req, res) {
       subject: "New Visitor Sign-In",
       html: `
         <h2>New Visitor Sign-In</h2>
-
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Company:</strong> ${company}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Site Address:</strong> ${siteAddress}</p>
-        <p><strong>Purpose of Visit:</strong> ${purpose}</p>
+        <p><strong>Purpose:</strong> ${purpose}</p>
         <p><strong>Time In:</strong> ${timeIn}</p>
         <p><strong>Date:</strong> ${date}</p>
-
-        <hr />
-        <p>This visitor has signed in via the Block Buddy visitor system.</p>
       `
     });
 
