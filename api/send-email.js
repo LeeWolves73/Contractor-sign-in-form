@@ -5,13 +5,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
-
-  const { name, company, email, siteAddress, purpose, timeIn, date } = req.body;
+  const { name, company, email, purpose, siteAddress, timeIn, date } = req.body;
 
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     await resend.emails.send({
-      from: "Block Buddy <info@block-buddy.co.uk>",
+      from: "Visitor Log <info@block-buddy.co.uk>",
       to: "info@block-buddy.co.uk",
       subject: "New Visitor Sign-In",
       html: `
@@ -25,15 +25,15 @@ export default async function handler(req, res) {
         <p><strong>Time In:</strong> ${timeIn}</p>
         <p><strong>Date:</strong> ${date}</p>
 
-        <br>
-        <p style="font-size:12px;color:#888;">This message was sent automatically from the visitor sign-in form.</p>
+        <hr />
+        <p>This visitor has signed in via the Block Buddy visitor system.</p>
       `
     });
 
     return res.status(200).json({ success: true });
 
   } catch (error) {
-    console.error("Email error:", error);
+    console.error("Email send error:", error);
     return res.status(500).json({ error: "Email failed to send" });
   }
 }
